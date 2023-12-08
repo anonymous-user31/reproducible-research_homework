@@ -102,7 +102,6 @@ ggplot(growth_data, aes(x = t)) +
   scale_y_log10()  # Log-transform the y-axis
 
 ![0e9096bf-60f1-4f55-9985-33d0426c9365](https://github.com/anonymous-user31/reproducible-research_homework/assets/150164357/6c9368e8-5ef4-4630-86c5-4c6923ee6b89)
-
    
 4) (**30 points**) Sometimes we are interested in modelling a process that involves randomness. A good example is Brownian motion. We will explore how to simulate a random process in a way that it is reproducible:
 
