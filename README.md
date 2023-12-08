@@ -65,42 +65,43 @@ Questions 1, 2 and 3 should be answered in the **README.md** file of the `logist
 3) (**20 points**) Add an R script to your repository that makes a graph comparing the exponential and logistic growth curves (using the same parameter estimates you found). Upload this graph to your repo and include it in the **README.md** file so it can be viewed in the repo homepage.
 
    ANSWER:
-   # Load necessary libraries
-   library(ggplot2)
-   library(dplyr)
-   
-   # Read the data
-   growth_data <- read.csv("/cloud/project/experiment3.csv")
-   
-   # Define the logistic growth function
-   logistic_growth <- function(t, K, N0, r) {
-     N0 * K / (N0 + (K - N0) * exp(-r * t))
-   }
-   
-   # Define the exponential growth function
-   exponential_growth <- function(t, N0, r) {
-     N0 * exp(r * t)
-   }
-   
-   # Parameters (example values, replace with your estimates)
-   K <- 1*10^9  # Carrying capacity
-   N0 <- 1*10^4.5  # Initial population size
-   r <- 0.005  # Rate of per capita increase
-   
-   # Adding the growth models to the data
-   growth_data$logistic <- logistic_growth(growth_data$t, K, N0, r)
-   growth_data$exponential <- exponential_growth(growth_data$t, N0, r)
-   
-   # Plotting the data and the models
-   ggplot(growth_data, aes(x = t)) +
-     geom_line(aes(y = logistic), colour = "red") +
-     geom_line(aes(y = exponential), colour = "blue") +
-     xlab("Time (t)") +
-     ylab("Population Size (N)") +
-     ggtitle("Comparison of Logistic and Exponential Growth") +
-     theme_bw()
-   
-     ![image](https://github.com/JawwadKhan31/logistic_growth/assets/150164357/67709d7b-6716-4771-b87e-39bdc224aa96)
+ # Load necessary libraries
+library(ggplot2)
+library(dplyr)
+
+# Read the data
+growth_data <- read.csv("/cloud/project/experiment3.csv")
+
+# Define the logistic growth function
+logistic_growth <- function(t, K, N0, r) {
+  N0 * K / (N0 + (K - N0) * exp(-r * t))
+}
+
+# Define the exponential growth function
+exponential_growth <- function(t, N0, r) {
+  N0 * exp(r * t)
+}
+
+# Parameters (example values, replace with your estimates)
+K <- (1*10)^9  # Carrying capacity
+N0 <- (1*10)^4.5  # Initial population size
+r <- 0.005  # Rate of per capita increase
+
+# Adding the growth models to the data
+growth_data$logistic <- logistic_growth(growth_data$t, K, N0, r)
+growth_data$exponential <- exponential_growth(growth_data$t, N0, r)
+
+# Plotting the data and the models with log-transformed y-axis
+ggplot(growth_data, aes(x = t)) +
+  geom_line(aes(y = logistic), colour = "red") +
+  geom_line(aes(y = exponential), colour = "blue") +
+  xlab("Time (t)") +
+  ylab("Population Size (N)") +
+  ggtitle("Comparison of Logistic and Exponential Growth") +
+  theme_bw() +
+  scale_y_log10()  # Log-transform the y-axis
+
+![0e9096bf-60f1-4f55-9985-33d0426c9365](https://github.com/anonymous-user31/reproducible-research_homework/assets/150164357/6c9368e8-5ef4-4630-86c5-4c6923ee6b89)
 
    
 4) (**30 points**) Sometimes we are interested in modelling a process that involves randomness. A good example is Brownian motion. We will explore how to simulate a random process in a way that it is reproducible:
