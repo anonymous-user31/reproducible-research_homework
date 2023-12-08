@@ -104,7 +104,8 @@ ggplot(growth_data, aes(x = t)) +
 ![0e9096bf-60f1-4f55-9985-33d0426c9365](https://github.com/anonymous-user31/reproducible-research_homework/assets/150164357/6c9368e8-5ef4-4630-86c5-4c6923ee6b89)
 
    
-4) (**30 points**) Sometimes we are interested in modelling a process that involves randomness. A good example is Brownian motion. We will explore how to simulate a random process in a way that it is reproducible:
+4) (**30 points**) Sometimes we are interested in modelling a process that involves randomness. A good example is Brownian motion. We will explore how to simulate a random process in a way that it is reproducible: 
+(4a, 4b and 4c ANSWERS IN Q4 CODE FILE)
 
    - A script for simulating a random_walk is provided in the `question-4-code` folder of this repo. Execute the code to produce the paths of two random walks. What do you observe? (10 points)
    - Investigate the term **random seeds**. What is a random seed and how does it work? (5 points)
