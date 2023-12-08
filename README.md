@@ -111,10 +111,12 @@ ggplot(growth_data, aes(x = t)) +
    - Edit the script to make a reproducible simulation of Brownian motion. Commit the file and push it to your forked `reproducible-research_homework` repo. (10 points)
    - Go to your commit history and click on the latest commit. Show the edit you made to the code in the comparison view (add this image to the **README.md** of the fork). (5 points)
   
+<img width="1374" alt="Screenshot 2023-12-08 at 05 57 56" src="https://github.com/anonymous-user31/reproducible-research_homework/assets/150164357/38dc8799-8a0b-4f16-a0a7-568addd056bf">
 
-  
+<img width="1377" alt="Screenshot 2023-12-08 at 05 58 06" src="https://github.com/anonymous-user31/reproducible-research_homework/assets/150164357/39fe4128-c02f-48b6-bec8-0d52a90cf092">
 
-6) (**30 points**) In 2014, Cui, Schlub and Holmes published an article in the *Journal of Virology* (doi: https://doi.org/10.1128/jvi.00362-14) showing that the size of viral particles, more specifically their volume, could be predicted from their genome size (length). They found that this relationship can be modelled using an allometric equation of the form **$`V = \beta L^{\alpha}`$**, where $`V`$ is the virion volume in nm<sup>3</sup> and $`L`$ is the genome length in nucleotides.
+
+5) (**30 points**) In 2014, Cui, Schlub and Holmes published an article in the *Journal of Virology* (doi: https://doi.org/10.1128/jvi.00362-14) showing that the size of viral particles, more specifically their volume, could be predicted from their genome size (length). They found that this relationship can be modelled using an allometric equation of the form **$`V = \beta L^{\alpha}`$**, where $`V`$ is the virion volume in nm<sup>3</sup> and $`L`$ is the genome length in nucleotides.
 
    - Import the data for double-stranded DNA (dsDNA) viruses taken from the Supplementary Materials of the original paper into Posit Cloud (the csv file is in the `question-5-data` folder). How many rows and columns does the table have? (3 points)
    - What transformation can you use to fit a linear model to the data? Apply the transformation. (3 points)
