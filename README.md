@@ -16,9 +16,9 @@ Questions 1, 2 and 3 should be answered in the **README.md** file of the `logist
 
    ANSWER: 1] Results (Experiment 3) 
    
-   ## K = 1x10^9 (carrying capacity)
-   ## N0 = 1x10^4.5 (initial population size)
-   ## r <- 0.005007086 (rate of per capita increase)
+   K = 1x10^9 (carrying capacity)
+   N0 = 1x10^4.5 (initial population size)
+   r <- 0.005007086 (rate of per capita increase)
    
    Overview:
    The repository contains the analysis of E.Coli growth in a controlled environment.
