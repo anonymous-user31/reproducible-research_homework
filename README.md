@@ -13,10 +13,95 @@ Questions 1, 2 and 3 should be answered in the **README.md** file of the `logist
 ## Assignment questions 
 
 1) (**10 points**) Annotate the **README.md** file in your `logistic_growth` repo with more detailed information about the analysis. Add a section on the results and include the estimates for $N_0$, $r$ and $K$ (mention which *.csv file you used).
+
+   ANSWER: 1] Results (Experiment 3) 
    
-2) (**10 points**) Use your estimates of $N_0$ and $r$ to calculate the population size at $t$ = 4980 min, assuming that the population grows exponentially. How does it compare to the population size predicted under logistic growth? 
+   ## K = 1x10^9 (carrying capacity)
+   ## N0 = 1x10^4.5 (initial population size)
+   ## r <- 0.005007086 (rate of per capita increase)
+   
+   Overview:
+   The repository contains the analysis of E.Coli growth in a controlled environment.
+   Our analysis uses logistic growth modeling to estimate the initial population size (N0),
+   rate of per capita increase (r), and the carrying capacity (K) of the bacteria.
+   
+   The growth data of E.Coli was collected under experimental conditions and is available
+   in 'experiment3.csv'. This file included time(t) and population size (N) at various time
+   points.
+   
+   Methodology
+   We applied the logistic growth mode, described by the differential equation  
+   dN/dt = Nr(1−N/K) tp estomate the key parameters of the bacterial growth. Two
+   distinct phases of growth were analysed: the exponential growth phase when resources
+   were abundance (N<<K) and the stationary phase when the population stabilised near 
+   the carrying capacity (N=K).
+   
+   Case 1: Exponential Growth Phase
+   For the early phase (t<1000 minutes), where the population grows exponentially, we 
+   used a linear approximation on the logarithm of population size. The linear model is 
+   given by ln(N) = ln(N0) + rt
+   
+   Case 2: The Stationary Phase
+   For the later phase (t>3000 minutes), where the population size approaches carrying 
+   capacity, we assumed that the population size remained constant, i.e. N(t) = 
+   approximately K.
+   
+   Results
+   - Initial population size (N0): Estimated from the exponential growth phase. Our analysis
+   suggests an initial population size of 1x10^4.5
+   - Rate of per Capita Increase (r): Estimated from the slope of the linear model in
+   the exponential phase. The estimated growth rate is 0.0050070086 per minute
+   - Carrying Capacity (K): Estimated from the stationary phases of growth. The
+   carrying capacity is around 1X10^9 bacteria.
+      
+2) (**10 points**) Use your estimates of $N_0$ and $r$ to calculate the population size at $t$ = 4980 min, assuming that the population grows exponentially. How does it compare to the population size predicted under logistic growth?
+
+   ANSWER: 2] If t = 4980 minutes, and N0 = 1x10^4.5 (initial population size) and
+   r = 0.005007086 (rate of per capita increase), and K = 1x10^9 (carrying capacity),
+   then the population size is 47,916 - using the formula. Under the logistic graph, it suggests that at
+   4980 minutes, the population is 5x10^9
+
 
 3) (**20 points**) Add an R script to your repository that makes a graph comparing the exponential and logistic growth curves (using the same parameter estimates you found). Upload this graph to your repo and include it in the **README.md** file so it can be viewed in the repo homepage.
+
+   ANSWER:
+   # Load necessary libraries
+   library(ggplot2)
+   library(dplyr)
+   
+   # Read the data
+   growth_data <- read.csv("/cloud/project/experiment3.csv")
+   
+   # Define the logistic growth function
+   logistic_growth <- function(t, K, N0, r) {
+     N0 * K / (N0 + (K - N0) * exp(-r * t))
+   }
+   
+   # Define the exponential growth function
+   exponential_growth <- function(t, N0, r) {
+     N0 * exp(r * t)
+   }
+   
+   # Parameters (example values, replace with your estimates)
+   K <- 1*10^9  # Carrying capacity
+   N0 <- 1*10^4.5  # Initial population size
+   r <- 0.005  # Rate of per capita increase
+   
+   # Adding the growth models to the data
+   growth_data$logistic <- logistic_growth(growth_data$t, K, N0, r)
+   growth_data$exponential <- exponential_growth(growth_data$t, N0, r)
+   
+   # Plotting the data and the models
+   ggplot(growth_data, aes(x = t)) +
+     geom_line(aes(y = logistic), colour = "red") +
+     geom_line(aes(y = exponential), colour = "blue") +
+     xlab("Time (t)") +
+     ylab("Population Size (N)") +
+     ggtitle("Comparison of Logistic and Exponential Growth") +
+     theme_bw()
+   
+     ![image](https://github.com/JawwadKhan31/logistic_growth/assets/150164357/67709d7b-6716-4771-b87e-39bdc224aa96)
+
    
 4) (**30 points**) Sometimes we are interested in modelling a process that involves randomness. A good example is Brownian motion. We will explore how to simulate a random process in a way that it is reproducible:
 
@@ -24,6 +109,7 @@ Questions 1, 2 and 3 should be answered in the **README.md** file of the `logist
    - Investigate the term **random seeds**. What is a random seed and how does it work? (5 points)
    - Edit the script to make a reproducible simulation of Brownian motion. Commit the file and push it to your forked `reproducible-research_homework` repo. (10 points)
    - Go to your commit history and click on the latest commit. Show the edit you made to the code in the comparison view (add this image to the **README.md** of the fork). (5 points)
+  
 
 5) (**30 points**) In 2014, Cui, Schlub and Holmes published an article in the *Journal of Virology* (doi: https://doi.org/10.1128/jvi.00362-14) showing that the size of viral particles, more specifically their volume, could be predicted from their genome size (length). They found that this relationship can be modelled using an allometric equation of the form **$`V = \beta L^{\alpha}`$**, where $`V`$ is the virion volume in nm<sup>3</sup> and $`L`$ is the genome length in nucleotides.
 
