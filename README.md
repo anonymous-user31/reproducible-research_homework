@@ -53,6 +53,9 @@ Questions 1, 2 and 3 should be answered in the **README.md** file of the `logist
    the exponential phase. The estimated growth rate is 0.0050070086 per minute
    - Carrying Capacity (K): Estimated from the stationary phases of growth. The
    carrying capacity is around 1X10^9 bacteria.
+
+
+
       
 2) (**10 points**) Use your estimates of $N_0$ and $r$ to calculate the population size at $t$ = 4980 min, assuming that the population grows exponentially. How does it compare to the population size predicted under logistic growth?
 
@@ -268,5 +271,153 @@ References:
 - Stodden, V., Leisch, F., & Peng, R. D. (Eds.). (2014). Implementing Reproducible Research. CRC Press.
 
 By using tools like Git and GitHub along with detailed protocols from platforms like protocols.io, researchers can greatly enhance the reproducibility and replicability of their work, although they must be mindful of the limitations and complement these tools with appropriate data management and documentation practices.
+
+------------------------------------
+
+CODE FOR Qs 1,2,
+
+#Script to plot the logistic growth data
+
+growth_data <- read.csv("/cloud/project/experiment3.csv")
+
+## This line above reads the data from Experiment 3 into a variable called growth_data that can be used throughout the rest of the R script
+
+install.packages("ggplot2")
+
+## This line installs the ggplot 2 package, a package that will allow us to create complex plots from our data frame found in the CSV file
+
+library(ggplot2)
+
+## The library function loads the package
+
+ggplot(aes(t,N), data = growth_data) +
+  
+## Initialises a ggplot graph using 't' for x axis and 'N for y axis'
+  
+  geom_point() +
+  
+## Adds points to the plot for each data entry in growth_data
+  
+  xlab("t") +
+  
+## Labels x-axis as t
+  
+  ylab("y") +
+  
+## Labels y-axis as y
+  
+  theme_bw()
+
+## Applies black and white theme to the plot
+
+ggplot(aes(x = t ,y = N), data = growth_data) +
+  
+## initialises another ggplot graph, but this time explicitly naming axes mapping
+  
+  geom_point() +
+  
+  xlab("t") +
+  
+## Labels x axis as 't'
+  
+  ylab("y") +
+  
+## Labels y axis as 'y'
+  
+  scale_y_continuous(trans='log10')
+
+## K = 1x10^9 (carrying capacity)
+## N0 = 1x10^4.5 (initial population size)
+## r = ... (rate of per capita increase)
+
+--------
+#Script to estimate the model parameters using a linear approximation
+
+library(dplyr)
+
+growth_data <- read.csv("/cloud/project/experiment3.csv")
+
+#Case 1. K >> N0, t is small
+
+data_subset1 <- growth_data %>% filter(t<1000) %>% mutate(N_log = log(N))
+
+model1 <- lm(N_log ~ t, data_subset1)
+summary(model1)
+
+r_value <- coef(model1)["t"]
+r_value
+
+#Case 2. N(t) = K
+
+data_subset2 <- growth_data %>% filter(t>3000)
+
+model2 <- lm(N ~ 1, data_subset2)
+summary(model2)
+----------
+#Script to plot data and model
+
+growth_data <- read.csv("/cloud/project/experiment3.csv")
+
+logistic_fun <- function(t) {
+  
+  N <- (N0*K*exp(r*t))/(K-N0+N0*exp(r*t))
+  
+  return(N)
+  
+}
+
+N0 <- (1*10)^4.5
+  
+r <- 0.005007086 ##(5.007e-03  from t estimate - the gradient)
+  
+K <- (1*10)^9
+
+
+
+ggplot(aes(x = t ,y = N), data = growth_data) +
+  
+  geom_function(fun=logistic_fun, colour="red") +
+  
+  geom_point()
+
+  #scale_y_continuous(trans='log10')
+---------
+# Load necessary libraries
+library(ggplot2)
+library(dplyr)
+
+# Read the data
+growth_data <- read.csv("/cloud/project/experiment3.csv")
+
+# Define the logistic growth function
+logistic_growth <- function(t, K, N0, r) {
+  N0 * K / (N0 + (K - N0) * exp(-r * t))
+}
+
+# Define the exponential growth function
+exponential_growth <- function(t, N0, r) {
+  N0 * exp(r * t)
+}
+
+# Parameters (example values, replace with your estimates)
+K <- (1*10)^9  # Carrying capacity
+N0 <- (1*10)^4.5  # Initial population size
+r <- 0.005  # Rate of per capita increase
+
+# Adding the growth models to the data
+growth_data$logistic <- logistic_growth(growth_data$t, K, N0, r)
+growth_data$exponential <- exponential_growth(growth_data$t, N0, r)
+
+# Plotting the data and the models with log-transformed y-axis
+ggplot(growth_data, aes(x = t)) +
+  geom_line(aes(y = logistic), colour = "red") +
+  geom_line(aes(y = exponential), colour = "blue") +
+  xlab("Time (t)") +
+  ylab("Population Size (N)") +
+  ggtitle("Comparison of Logistic and Exponential Growth") +
+  theme_bw() +
+  scale_y_log10()  # Log-transform the y-axis
+
+
 
 
